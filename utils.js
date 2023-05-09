@@ -1,5 +1,8 @@
 const fs = require('fs/promises')
+const https = require('https')
+const fetch = require('cross-fetch')
 const YAML = require('yaml')
+const get_tags = require('./tags')
 
 async function get_template_json(file_name = 'template') {
   const _path = `./${file_name}.yaml`
@@ -12,7 +15,12 @@ async function parse_content({file_path, type, prefix}) {
     const buffer = await fs.readFile(file_path)
     return {content: buffer.toString(), prefix}
   } else if (type === 'url') {
-    const resp = await fetch(file_path)
+    const agent = new https.Agent({
+      rejectUnauthorized: false,
+    });
+    const resp = await fetch(file_path, {
+      agent
+    })
     if (!resp.ok) {
       return null
     }
@@ -35,7 +43,8 @@ async function* get_sources_content(sources) {
 function combine_prefix_in_proxy(proxy, prefix) {
   const json = proxy
   json.name = `${prefix}-${json.name}`
-  return {name: json.name, proxy: json}
+  const tags = get_tags(proxy, prefix)
+  return {name: json.name, tags, proxy: json}
 }
 
 exports = module.exports = {
