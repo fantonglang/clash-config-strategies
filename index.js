@@ -10,14 +10,14 @@ const fetch = require('cross-fetch');
     {file_path: process.env.cyanmori_sub, type: 'url', prefix: 'cyanmori'},
   ])
   await fs.writeFile(process.env.target_path, yaml)
-  const resp = await fetch('http://localhost:9090/configs?force=false', {
-    method: 'PUT',
-    headers: {
-      'content-type': 'application/json'
-    },
-    body: JSON.stringify({
-      path: process.env.target_path
-    })
-  })
-  console.log(resp.ok? 'ok': 'failed')
+  // const resp = await fetch('http://localhost:9090/configs?force=false', {
+  //   method: 'PUT',
+  //   headers: {
+  //     'content-type': 'application/json'
+  //   },
+  //   body: JSON.stringify({
+  //     path: process.env.target_path
+  //   })
+  // })
+  // console.log(resp.ok? 'ok': 'failed')
 })()
