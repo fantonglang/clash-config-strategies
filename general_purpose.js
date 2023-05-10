@@ -62,7 +62,7 @@ async function entry(sources) {
     name: 'ALL-LOAD-BALANCE',
     type: 'load-balance',
     strategy: 'consistent-hashing',
-    proxies: proxy_collection.map(p => p.name),
+    proxies: proxy_collection.filter(p => p.prefix != 'FREE').map(p => p.name),
     url: 'http://www.gstatic.com/generate_204',
     interval: 600
   })
@@ -83,6 +83,18 @@ async function entry(sources) {
     })
   }
   for (const {prefix} of sources) {
+    if (prefix == 'FREE') {
+      proxy_groups.push({
+        name: `SOURCE-${prefix}`,
+        type: 'url-test',
+        proxies: proxy_collection.filter(p => p.prefix === prefix).map(p => p.name),
+        url: 'http://www.gstatic.com/generate_204',
+        interval: 600,
+        tolerance: 50,
+        lazy: true
+      })
+      continue
+    }
     proxy_groups.push({
       name: `SOURCE-${prefix}`,
       type: 'select',
