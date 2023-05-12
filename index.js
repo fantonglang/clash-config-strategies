@@ -8,7 +8,7 @@ const fetch = require('cross-fetch');
     {file_path: process.env.juzi_sub, type: 'url', prefix: 'juzi'}, 
     {file_path: process.env.jms_sub, type: 'url', prefix: 'jms'},
     {file_path: process.env.cyanmori_sub, type: 'url', prefix: 'cyanmori'},
-    {file_path: 'https://nodefree.org/dy/2023/05/20230510.yaml', type: 'url', prefix: 'FREE'},
+    // {file_path: 'https://nodefree.org/dy/2023/05/20230510.yaml', type: 'url', prefix: 'FREE'},
   ])
   await fs.writeFile(process.env.target_path, yaml)
   // const resp = await fetch('http://localhost:9090/configs?force=false', {

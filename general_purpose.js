@@ -101,6 +101,11 @@ async function entry(sources) {
       proxies: proxy_collection.filter(p => p.prefix === prefix).map(p => p.name)
     })
   }
+  proxy_groups.push({
+    name: 'OTHERS',
+    type: 'select',
+    proxies: ['DIRECT', 'PROXY']
+  })
   
   return {
     yaml: YAML.stringify(base),
