@@ -1,5 +1,6 @@
 const {get_template_json, get_sources_content, combine_prefix_in_proxy} = require('./utils.js')
 const YAML = require('yaml')
+const fs = require('fs')
 const test_openai = require('./post-processing');
 
 function get_places(grouped_by_tags) {
@@ -109,9 +110,15 @@ async function entry(sources) {
   })
 
   proxy_groups.find(p => p.name === 'OPENAI').proxies = await get_all_openai_ok_names(base)
+
+  const {rules} = YAML.parse(fs.readFileSync('./rules_alt.yaml').toString())
+  const alt = {...base}
+  delete alt['rule-providers']
+  alt.rules = rules
   
   return {
-    yaml: YAML.stringify(base)
+    yaml: YAML.stringify(base),
+    yaml2: YAML.stringify(alt)
   }
 }
 
