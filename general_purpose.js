@@ -26,7 +26,7 @@ async function entry(sources) {
   }
   base.proxies = [
     ...proxy_collection.map(p => p.proxy),
-    {name: 'vps', server: process.env.vps_server, port: process.env.vps_port, type: process.env.vps_type, cipher: process.env.vps_cipher, password: process.env.vps_password}
+    {name: 'vps', server: process.env.vps_server, port: Number.parseInt(process.env.vps_port), type: process.env.vps_type, cipher: process.env.vps_cipher, password: process.env.vps_password}
   ]
   //proxy_groups
   const proxy_groups = []
@@ -109,7 +109,7 @@ async function entry(sources) {
   
   return {
     yaml: YAML.stringify(base),
-    metadata: proxy_collection
+    final_config: base
   }
 }
 
