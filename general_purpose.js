@@ -1,5 +1,6 @@
 const {get_template_json, get_sources_content, combine_prefix_in_proxy} = require('./utils.js')
 const YAML = require('yaml')
+const test_openai = require('./post-processing');
 
 function get_places(grouped_by_tags) {
   return Object.keys(grouped_by_tags).filter(p => p.startsWith('PLACE-'))
@@ -106,11 +107,27 @@ async function entry(sources) {
     type: 'select',
     proxies: ['DIRECT', 'PROXY']
   })
+
+  proxy_groups.find(p => p.name === 'OPENAI').proxies = await get_all_openai_ok_names(base)
   
   return {
-    yaml: YAML.stringify(base),
-    final_config: base
+    yaml: YAML.stringify(base)
   }
+}
+
+async function get_all_openai_ok_names(final_config) {
+  const selects = final_config.proxies.filter(p => ['ss', 'vmess'].indexOf(p.type) >=0).filter(p => p.name != 'vps')
+  const results = []
+  console.log('====Testing ChatGpt Starts====')
+  for (const selected of selects) {
+    const result = await test_openai(selected)
+    if (result) {
+      results.push(selected.name)
+    }
+  }
+  console.log('====Testing ChatGpt Ends====')
+  results.sort()
+  return results
 }
 
 exports = module.exports = entry

@@ -1,5 +1,6 @@
 const test_openai_ss = require('./ss')
 const test_openai_ssr = require('./ssr')
+const test_openai_vmess = require('./vmess')
 
 exports = module.exports = async function(proxy) {
   const inbounds = [
@@ -17,6 +18,7 @@ exports = module.exports = async function(proxy) {
     case 'ssr':
       return await test_openai_ssr(proxy, inbounds)
     case 'vmess':
+      return await test_openai_vmess(proxy, inbounds)
     default:
       return false
   }

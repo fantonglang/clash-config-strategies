@@ -18,7 +18,7 @@ async function test_openai(proxy, inbounds = null) {
     "inbounds": inbounds,
     "outbounds": [
       {
-        "protocol": "shadowsocksr",
+        "protocol": "shadowsocks",
         "settings": {
           "servers": [
             {
