@@ -109,7 +109,7 @@ async function entry(sources) {
     proxies: ['DIRECT', 'PROXY']
   })
 
-  proxy_groups.find(p => p.name === 'OPENAI').proxies = await get_all_openai_ok_names(base)
+  // proxy_groups.find(p => p.name === 'OPENAI').proxies = await get_all_openai_ok_names(base)
 
   const {rules} = YAML.parse(fs.readFileSync('./rules_alt.yaml').toString())
   const alt = {...base}
