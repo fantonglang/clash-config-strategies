@@ -2,6 +2,8 @@ rules:
   - DOMAIN-SUFFIX,smtp,DIRECT
   - DOMAIN-KEYWORD,aria2,DIRECT
 
+  - DOMAIN-SUFFIX,consumersadvocate.org,PROXY
+  - DOMAIN-SUFFIX,money.com,PROXY
   - DOMAIN-SUFFIX,ampproject.org,PROXY
   - DOMAIN-SUFFIX,appspot.com,PROXY
   - DOMAIN-SUFFIX,blogger.com,PROXY

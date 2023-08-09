@@ -5,9 +5,10 @@ require('dotenv').config();
 
 (async function() {
   const {yaml, yaml2} = await entry([
-    {file_path: process.env.juzi_sub, type: 'url', prefix: 'juzi'}, 
+    // {file_path: process.env.juzi_sub, type: 'url', prefix: 'juzi'}, 
     {file_path: process.env.jms_sub, type: 'url', prefix: 'jms'},
     {file_path: process.env.cyanmori_sub, type: 'url', prefix: 'cyanmori'},
+    {file_path: process.env.vps_sub, type: 'url', prefix: 'vps'},
   ])
   await fs.writeFile(process.env.target_path, yaml)
   await fs.writeFile('./final.yaml', yaml2)

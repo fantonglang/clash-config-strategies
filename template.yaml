@@ -104,6 +104,8 @@ rule-providers:
     interval: 86400
 
 rules:
+  - DOMAIN-SUFFIX,consumersadvocate.org,PROXY
+  - DOMAIN-SUFFIX,money.com,PROXY
   - RULE-SET,applications,DIRECT
   - DOMAIN,clash.razord.top,DIRECT
   - DOMAIN,yacd.haishan.me,DIRECT

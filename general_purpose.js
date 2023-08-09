@@ -28,7 +28,7 @@ async function entry(sources) {
   }
   base.proxies = [
     ...proxy_collection.map(p => p.proxy),
-    {name: 'vps', server: process.env.vps_server, port: Number.parseInt(process.env.vps_port), type: process.env.vps_type, cipher: process.env.vps_cipher, password: process.env.vps_password}
+    // {name: 'vps', server: process.env.vps_server, port: Number.parseInt(process.env.vps_port), type: process.env.vps_type, cipher: process.env.vps_cipher, password: process.env.vps_password}
   ]
   //proxy_groups
   const proxy_groups = []
@@ -64,14 +64,22 @@ async function entry(sources) {
     name: 'ALL-LOAD-BALANCE',
     type: 'load-balance',
     strategy: 'consistent-hashing',
-    proxies: proxy_collection.filter(p => p.prefix != 'FREE').map(p => p.name),
+    proxies: proxy_collection.filter(p => p.prefix != 'FREE' && p.prefix != 'vps').map(p => p.name),
+    url: 'http://www.gstatic.com/generate_204',
+    interval: 600
+  })
+  proxy_groups.push({
+    name: 'VPS-LOAD-BALANCE',
+    type: 'load-balance',
+    strategy: 'consistent-hashing',
+    proxies: proxy_collection.filter(p => p.prefix == 'vps').map(p => p.name),
     url: 'http://www.gstatic.com/generate_204',
     interval: 600
   })
   proxy_groups.push({
     name: 'SAFE',
     type: 'relay',
-    proxies: ['ALL-LOAD-BALANCE', 'vps']
+    proxies: ['ALL-LOAD-BALANCE', 'VPS-LOAD-BALANCE']
   })
   for (const tag of get_places(grouped_by_tags)) {
     proxy_groups.push({
@@ -109,7 +117,7 @@ async function entry(sources) {
     proxies: ['DIRECT', 'PROXY']
   })
 
-  // proxy_groups.find(p => p.name === 'OPENAI').proxies = await get_all_openai_ok_names(base)
+  proxy_groups.find(p => p.name === 'OPENAI').proxies = await get_all_openai_ok_names(base)
 
   const {rules} = YAML.parse(fs.readFileSync('./rules_alt.yaml').toString())
   const alt = {...base}
@@ -123,7 +131,7 @@ async function entry(sources) {
 }
 
 async function get_all_openai_ok_names(final_config) {
-  const selects = final_config.proxies.filter(p => ['ss', 'vmess'].indexOf(p.type) >=0).filter(p => p.name != 'vps')
+  const selects = final_config.proxies.filter(p => ['ss', 'vmess'].indexOf(p.type) >=0).filter(p => !p.name.startsWith('vps-'))
   const results = []
   console.log('====Testing ChatGpt Starts====')
   for (const selected of selects) {
