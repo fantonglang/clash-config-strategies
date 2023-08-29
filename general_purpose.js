@@ -12,6 +12,7 @@ async function entry(sources) {
   const proxy_collection = []
   const grouped_by_tags = {}
   for await (const {content, prefix} of get_sources_content(sources)) {
+    console.log(prefix + " ok")
     const json = YAML.parse(content)
     const {proxies} = json
     for (const _proxy of proxies) {
