@@ -38,7 +38,7 @@ async function entry(sources) {
     name: 'PROXY',
     type: 'select',
     proxies: [
-      'CRAWLER', 'GAME', 'OPENAI', 'SAFE',
+      'CRAWLER', 'GAME', 'OPENAI',/* 'SAFE',*/
       ...get_places(grouped_by_tags).map(p => p.replace('PLACE-', '🇺🇳')),
       ...sources.map(p => `SOURCE-${p.prefix}`)
     ]
@@ -74,19 +74,19 @@ async function entry(sources) {
     url: 'http://www.gstatic.com/generate_204',
     interval: 600
   })
-  proxy_groups.push({
-    name: 'VPS-LOAD-BALANCE',
-    type: 'load-balance',
-    strategy: 'consistent-hashing',
-    proxies: proxy_collection.filter(p => p.prefix == 'vps').map(p => p.name),
-    url: 'http://www.gstatic.com/generate_204',
-    interval: 600
-  })
-  proxy_groups.push({
-    name: 'SAFE',
-    type: 'relay',
-    proxies: ['ALL-LOAD-BALANCE', 'VPS-LOAD-BALANCE']
-  })
+  // proxy_groups.push({
+  //   name: 'VPS-LOAD-BALANCE',
+  //   type: 'load-balance',
+  //   strategy: 'consistent-hashing',
+  //   proxies: proxy_collection.filter(p => p.prefix == 'vps').map(p => p.name),
+  //   url: 'http://www.gstatic.com/generate_204',
+  //   interval: 600
+  // })
+  // proxy_groups.push({
+  //   name: 'SAFE',
+  //   type: 'relay',
+  //   proxies: ['ALL-LOAD-BALANCE', 'VPS-LOAD-BALANCE']
+  // })
   for (const tag of get_places(grouped_by_tags)) {
     proxy_groups.push({
       name: tag.replace('PLACE-', '🇺🇳'),
