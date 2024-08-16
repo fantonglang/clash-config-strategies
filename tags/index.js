@@ -2,6 +2,7 @@ const cyanmori = require('./cyanmori.js')
 const juzi = require('./juzi.js')
 const jms = require('./justmysocks')
 const vps = require('./vps.js')
+const dog = require('./dog.js')
 
 exports = module.exports = function(proxy, prefix) {
   if (prefix === 'cyanmori') {
@@ -15,6 +16,9 @@ exports = module.exports = function(proxy, prefix) {
   }
   if (prefix === 'vps') {
     return vps(proxy)
+  }
+  if (prefix === 'dog') {
+    return dog(proxy)
   }
   return []
 }

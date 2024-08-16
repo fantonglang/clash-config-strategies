@@ -9,6 +9,7 @@ require('dotenv').config();
     {file_path: process.env.jms_sub, type: 'url', prefix: 'jms'},
     {file_path: process.env.cyanmori_sub, type: 'url', prefix: 'cyanmori'},
     // {file_path: process.env.vps_sub, type: 'url', prefix: 'vps'},
+    {file_path: process.env.dog_sub, type: 'url', prefix: 'dog'}
   ])
   // await fs.writeFile(process.env.target_path, yaml)
   await fs.writeFile('./final.yaml', yaml2)

@@ -50,7 +50,7 @@ async function entry(sources) {
     name: 'CRAWLER',
     type: 'load-balance',
     strategy: 'consistent-hashing',
-    proxies: grouped_by_tags['cyanmori-V1'].map(p => p.name),
+    proxies: grouped_by_tags['dog'].map(p => p.name),
     url: 'http://www.gstatic.com/generate_204',
     interval: 600
   })
@@ -137,7 +137,7 @@ async function entry(sources) {
 }
 
 async function get_all_openai_ok_names(final_config) {
-  const selects = final_config.proxies.filter(p => ['ss', 'vmess'].indexOf(p.type) >=0).filter(p => !p.name.startsWith('vps-'))
+  const selects = final_config.proxies.filter(p => ['ss', 'vmess'].indexOf(p.type) >=0).filter(p => !p.name.startsWith('vps-') && (p.name.startsWith('dog-') || p.name.startsWith('jms-')))
   const results = []
   console.log('====Testing ChatGpt Starts====')
   for (const selected of selects) {
