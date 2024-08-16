@@ -1,7 +1,7 @@
 rules:
   - DOMAIN-SUFFIX,smtp,DIRECT
   - DOMAIN-KEYWORD,aria2,DIRECT
-
+  - DOMAIN-SUFFIX,stripe.com,PROXY
   - DOMAIN-SUFFIX,vipdev.lndo.site,DIRECT
   - DOMAIN-SUFFIX,consumersadvocate.org,PROXY
   - DOMAIN-SUFFIX,money.com,PROXY

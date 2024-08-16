@@ -104,6 +104,7 @@ rule-providers:
     interval: 86400
 
 rules:
+  - DOMAIN-SUFFIX,stripe.com,PROXY
   - DOMAIN-SUFFIX,vipdev.lndo.site,DIRECT
   - DOMAIN-SUFFIX,consumersadvocate.org,PROXY
   - DOMAIN-SUFFIX,money.com,PROXY
