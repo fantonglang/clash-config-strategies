@@ -7,6 +7,13 @@ log-level: silent
 external-controller: '0.0.0.0:9090'
 secret: ''
 
+nameserver:
+  - 114.114.114.114 # default value
+  - 8.8.8.8 # default value
+  - tls://dns.rubyfish.cn:853 # DNS over TLS
+  - https://1.1.1.1/dns-query # DNS over HTTPS
+  - dhcp://en0 # dns from dhcp
+
 proxies:
 
 proxy-groups:
