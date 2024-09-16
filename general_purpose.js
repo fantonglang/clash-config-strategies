@@ -38,14 +38,11 @@ async function entry(sources) {
     name: 'PROXY',
     type: 'select',
     proxies: [
-      'CRAWLER', 'GAME', 'OPENAI',/* 'SAFE',*/
+      'CRAWLER', 'OPENAI',/* 'SAFE',*/
       ...get_places(grouped_by_tags).map(p => p.replace('PLACE-', '🇺🇳')),
       ...sources.map(p => `SOURCE-${p.prefix}`)
     ]
   })
-  if (!grouped_by_tags['cyanmori-V2']) {
-    proxy_groups.find(x => x.name === 'PROXY').proxies.splice(1,1)
-  }
   proxy_groups.push({
     name: 'CRAWLER',
     type: 'load-balance',
@@ -54,13 +51,6 @@ async function entry(sources) {
     url: 'http://www.gstatic.com/generate_204',
     interval: 600
   })
-  if (grouped_by_tags['cyanmori-V2']) {
-    proxy_groups.push({
-      name: 'GAME',
-      type: 'select',
-      proxies: grouped_by_tags['cyanmori-V2'].map(p => p.name)
-    })
-  }
   proxy_groups.push({
     name: 'OPENAI',
     type: 'select',
