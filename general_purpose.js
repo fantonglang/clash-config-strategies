@@ -38,24 +38,24 @@ async function entry(sources) {
     name: 'PROXY',
     type: 'select',
     proxies: [
-      'CRAWLER', 'OPENAI',/* 'SAFE',*/
+      /*'CRAWLER', 'OPENAI', 'SAFE',*/
       ...get_places(grouped_by_tags).map(p => p.replace('PLACE-', '🇺🇳')),
       ...sources.map(p => `SOURCE-${p.prefix}`)
     ]
   })
-  proxy_groups.push({
-    name: 'CRAWLER',
-    type: 'load-balance',
-    strategy: 'consistent-hashing',
-    proxies: grouped_by_tags['dog'].map(p => p.name),
-    url: 'http://www.gstatic.com/generate_204',
-    interval: 600
-  })
-  proxy_groups.push({
-    name: 'OPENAI',
-    type: 'select',
-    proxies: grouped_by_tags['openai'].map(p => p.name)
-  })
+  // proxy_groups.push({
+  //   name: 'CRAWLER',
+  //   type: 'load-balance',
+  //   strategy: 'consistent-hashing',
+  //   proxies: grouped_by_tags['dog'].map(p => p.name),
+  //   url: 'http://www.gstatic.com/generate_204',
+  //   interval: 600
+  // })
+  // proxy_groups.push({
+  //   name: 'OPENAI',
+  //   type: 'select',
+  //   proxies: grouped_by_tags['openai'].map(p => p.name)
+  // })
   proxy_groups.push({
     name: 'ALL-LOAD-BALANCE',
     type: 'load-balance',
@@ -113,7 +113,7 @@ async function entry(sources) {
     proxies: ['DIRECT', 'PROXY']
   })
 
-  proxy_groups.find(p => p.name === 'OPENAI').proxies = await get_all_openai_ok_names(base)
+  // proxy_groups.find(p => p.name === 'OPENAI').proxies = await get_all_openai_ok_names(base)
 
   const {rules} = YAML.parse(fs.readFileSync('./rules_alt.yaml').toString())
   const alt = {...base}

@@ -548,15 +548,6 @@ rules:
   - DOMAIN-SUFFIX,yimg.com,PROXY
   - DOMAIN,api.steampowered.com,PROXY
   - DOMAIN,store.steampowered.com,PROXY
-  
-  - DOMAIN-SUFFIX,platform.openai.com,OPENAI
-  - DOMAIN-SUFFIX,beta.openai.com,OPENAI
-  - DOMAIN-SUFFIX,auth0.openai.com,OPENAI 
-  - DOMAIN-SUFFIX,auth1.openai.com,OPENAI 
-  - DOMAIN-SUFFIX,auth2.openai.com,OPENAI 
-  - DOMAIN-SUFFIX,openai.com,OPENAI 
-  - DOMAIN-SUFFIX,chat.openai.com,OPENAI 
-  - DOMAIN-SUFFIX,pay.openai.com,OPENAI
 
   - DOMAIN-SUFFIX,aaplimg.com,DIRECT
   - DOMAIN-SUFFIX,apple.co,DIRECT
