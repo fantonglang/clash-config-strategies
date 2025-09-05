@@ -6,7 +6,7 @@ require('dotenv').config();
 (async function() {
   const {yaml, yaml2} = await entry([
     {file_path: process.env.jms_sub, type: 'url', prefix: 'jms'},
-    // {file_path: process.env.jms2_sub, type: 'url', prefix: 'jms2'},
+    {file_path: process.env.jms2_sub, type: 'url', prefix: 'jms2'},
     // {file_path: process.env.miao_sub, type: 'url', prefix: 'miao'},
     // {file_path: process.env.dog_sub, type: 'url', prefix: 'dog'}
   ])
