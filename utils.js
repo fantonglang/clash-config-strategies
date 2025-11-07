@@ -6,6 +6,7 @@ const YAML = require('yaml')
 const get_tags = require('./tags')
 const S3 = require('aws-sdk/clients/s3.js')
 var mime = require('mime-types')
+const { get_yaml_content } = require('./url_content/index.js');
 
 async function get_template_json(file_name = 'template') {
   const _path = `./${file_name}.yaml`
@@ -18,16 +19,7 @@ async function parse_content({file_path, type, prefix}) {
     const buffer = await fs.readFile(file_path)
     return {content: buffer.toString(), prefix}
   } else if (type === 'url') {
-    const agent = new https.Agent({
-      rejectUnauthorized: false,
-    });
-    const resp = await fetch(file_path, {
-      agent
-    })
-    if (!resp.ok) {
-      return null
-    }
-    const text = await resp.text()
+    const text = await get_yaml_content(file_path)
     return {content: text, prefix}
   }
   return null
