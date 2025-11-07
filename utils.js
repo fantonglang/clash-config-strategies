@@ -42,18 +42,40 @@ function combine_prefix_in_proxy(proxy, prefix) {
   return {name: json.name, tags, proxy: json}
 }
 
+// function _upload2r2(local_path, key) {
+//   const s3 = new S3({
+//     endpoint: `https://${process.env.r2_account_id}.r2.cloudflarestorage.com`,
+//     accessKeyId: `${process.env.r2_access_key_id}`,
+//     secretAccessKey: `${process.env.r2_secret_access_key}`,
+//     signatureVersion: 'v4',
+//   });
+//   return new Promise((resolve, reject) => {
+//     s3.upload({
+//       Bucket: process.env.r2_bucket,
+//       Key: key,
+//       Body: fs_sync.createReadStream(local_path),
+//       ContentType: mime.lookup(local_path)
+//     }, (err, data) => {
+//       if (err) {
+//         reject(err)
+//       } else {
+//         resolve(data.Location)
+//       }
+//     })
+//   })
+// }
 
 
 function upload2r2(local_path, key) {
   const s3 = new S3({
-    endpoint: `https://${process.env.r2_account_id}.r2.cloudflarestorage.com`,
-    accessKeyId: `${process.env.r2_access_key_id}`,
-    secretAccessKey: `${process.env.r2_secret_access_key}`,
+    endpoint: `https://s3.cn-east-1.qiniucs.com`,
+    accessKeyId: `${process.env.qiniu_access_key}`,
+    secretAccessKey: `${process.env.qiniu_secret_key}`,
     signatureVersion: 'v4',
   });
   return new Promise((resolve, reject) => {
     s3.upload({
-      Bucket: process.env.r2_bucket,
+      Bucket: process.env.qiniu_bucket,
       Key: key,
       Body: fs_sync.createReadStream(local_path),
       ContentType: mime.lookup(local_path)
