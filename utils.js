@@ -7,6 +7,7 @@ const get_tags = require('./tags')
 const S3 = require('aws-sdk/clients/s3.js')
 var mime = require('mime-types')
 const { get_yaml_content } = require('./url_content/index.js');
+const qiniu = require('qiniu');
 
 async function get_template_json(file_name = 'template') {
   const _path = `./${file_name}.yaml`
@@ -65,8 +66,13 @@ function combine_prefix_in_proxy(proxy, prefix) {
 //   })
 // }
 
+async function upload2r2(local_path, key) {
+  await _upload2r2(local_path, key)
+  const url = "http://t5cqpuzxa.hd-bkt.clouddn.com/final.yaml"
+  await _refresh_qiniu_cdn([url])
+}
 
-function upload2r2(local_path, key) {
+function _upload2r2(local_path, key) {
   const s3 = new S3({
     endpoint: `https://s3.cn-east-1.qiniucs.com`,
     accessKeyId: `${process.env.qiniu_access_key}`,
@@ -87,6 +93,22 @@ function upload2r2(local_path, key) {
       }
     })
   })
+}
+
+function _refresh_qiniu_cdn(urls) {
+  const accessKey = process.env.qiniu_access_key;
+  const secretKey = process.env.qiniu_secret_key;
+  var mac = new qiniu.auth.digest.Mac(accessKey, secretKey);
+  var cdnManager = new qiniu.cdn.CdnManager(mac);
+  return new Promise((resolve, reject) => {
+    cdnManager.refreshUrls(urls, function(err, respBody, respInfo) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(respBody);
+      }
+    });
+  });
 }
 
 
