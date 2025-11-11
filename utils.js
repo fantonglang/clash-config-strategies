@@ -68,7 +68,7 @@ function combine_prefix_in_proxy(proxy, prefix) {
 
 async function upload2r2(local_path, key) {
   await _upload2r2(local_path, key)
-  const url = "http://t5cqpuzxa.hd-bkt.clouddn.com/final.yaml"
+  const url = "http://amghokl.cn/final.yaml"
   await _refresh_qiniu_cdn([url])
 }
 
